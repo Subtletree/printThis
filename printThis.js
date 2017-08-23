@@ -100,7 +100,7 @@
             top: "-600px"
         });
 
-        // $iframe.ready() and $iframe.load were inconsistent between browsers    
+        // $iframe.ready() and $iframe.load were inconsistent between browsers
         setTimeout(function() {
 
             // Add doctype to fix the style difference between printing and render
@@ -146,7 +146,7 @@
                     $head.append("<link type='text/css' rel='stylesheet' href='" + href + "' media='" + media + "'>");
                 }
             });
-            
+
             // import style tags
             if (opt.importStyle) $("style").each(function() {
                 $(this).clone().appendTo($head);
@@ -183,9 +183,11 @@
                 // Re-draw new canvases by referencing the originals
                 $body.find('canvas').each(function(){
                     var cid = $(this).data('printthis'),
-                        $src = $('[data-printthis="' + cid + '"]');
+                        $src = $('[data-printthis="' + cid + '"]'),
+                        imgData = $src[0].toDataURL();
 
-                    this.getContext('2d').drawImage($src[0], 0, 0);
+                    // this.getContext('2d').drawImage($src[0], 0, 0);
+                    $(this).replaceWith('<img src="' + imgData + '"></img>');
 
                     // Remove the markup from the original
                     $src.removeData('printthis');
